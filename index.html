@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>双人合盘工作台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <h1>双人占星合盘工作台</h1>
+      <p>输入 A / B 的出生信息，生成本命盘、比较盘、时空盘、组合盘、马盘与月返盘，并支持动态盘按日期调整。</p>
+    </header>
+
+    <main class="container">
+      <section class="panel form-panel">
+        <h2>基础资料</h2>
+        <div class="grid two">
+          <fieldset>
+            <legend>对象 A</legend>
+            <label>姓名
+              <input id="a-name" type="text" placeholder="例如：A" />
+            </label>
+            <label>出生日期时间
+              <input id="a-datetime" type="datetime-local" />
+            </label>
+            <label>出生地点
+              <input id="a-location" type="text" placeholder="城市 / 国家" />
+            </label>
+            <label>时区（可选）
+              <input id="a-timezone" type="text" placeholder="例如：Asia/Shanghai" />
+            </label>
+          </fieldset>
+          <fieldset>
+            <legend>对象 B</legend>
+            <label>姓名
+              <input id="b-name" type="text" placeholder="例如：B" />
+            </label>
+            <label>出生日期时间
+              <input id="b-datetime" type="datetime-local" />
+            </label>
+            <label>出生地点
+              <input id="b-location" type="text" placeholder="城市 / 国家" />
+            </label>
+            <label>时区（可选）
+              <input id="b-timezone" type="text" placeholder="例如：Asia/Shanghai" />
+            </label>
+          </fieldset>
+        </div>
+
+        <div class="actions">
+          <button id="generate-btn">生成全部星盘</button>
+          <button id="export-btn" type="button">导出结果 JSON</button>
+          <label class="inline">动态盘日期（年月日）
+            <input id="dynamic-date" type="date" />
+          </label>
+          <button id="prev-day-btn" type="button">前一天</button>
+          <button id="next-day-btn" type="button">后一天</button>
+        </div>
+      </section>
+
+      <section class="panel" id="overview-panel" hidden>
+        <h2>整体解读</h2>
+        <div id="score-bars" class="score-bars"></div>
+        <p id="overall-reading"></p>
+      </section>
+
+      <section class="panel" id="aspect-panel" hidden>
+        <h2>关键相位（A ↔ B）</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>对象</th>
+                <th>相位</th>
+                <th>容许度</th>
+                <th>解读</th>
+              </tr>
+            </thead>
+            <tbody id="aspect-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="charts" class="chart-grid"></section>
+    </main>
+
+    <template id="chart-template">
+      <article class="panel chart-card">
+        <header>
+          <h3 class="chart-title"></h3>
+          <div class="chart-meta"></div>
+        </header>
+        <div class="dynamic-controls" hidden>
+          <label>盘面日期
+            <input type="date" class="chart-date" />
+          </label>
+          <button class="refresh-btn">更新该盘</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>星体/虚拟点</th>
+                <th>落座</th>
+                <th>度数</th>
+                <th>宫位</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody class="placement-body"></tbody>
+          </table>
+        </div>
+        <section>
+          <h4>盘面解读</h4>
+          <p class="chart-reading"></p>
+        </section>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
